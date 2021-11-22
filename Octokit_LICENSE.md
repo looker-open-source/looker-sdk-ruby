@@ -1,5 +1,4 @@
-The Looker SDK for Ruby is based in part on Octokit
-https://github.com/octokit/octokit.rb.
+The Looker SDK for Ruby is based in part on [Octokit](https://github.com/octokit/octokit.rb).
 
 Octokit's license:
 
