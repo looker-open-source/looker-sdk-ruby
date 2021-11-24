@@ -20,7 +20,7 @@ jobs:
                package_name: .name | split(" ")[0],
                name,
                tag_name,
-               version: .tag_name | split("-v")[1],
+               version: try(.tag_name | split("-v")[1]),
                html_url,
                target_commitish,
                created_at,
