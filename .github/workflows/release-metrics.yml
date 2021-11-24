@@ -27,4 +27,4 @@ jobs:
                prerelease
              }'' $GITHUB_EVENT_PATH > releases.json'
       - run: cat releases.json
-      - run: #bq load --source_format=NEWLINE_DELIMITED_JSON metrics.releases releases.json
+#      - run: bq load --source_format=NEWLINE_DELIMITED_JSON metrics.releases releases.json
