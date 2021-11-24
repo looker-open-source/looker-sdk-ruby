@@ -2,6 +2,8 @@ name: Send publish metrics to bigquery
 on:
   release:
     types: published
+  push:
+    branches: [ drstrangelove/release-metrics ]
 jobs:
   publish:
     runs-on: ubuntu-latest
