@@ -19,7 +19,7 @@ jobs:
         run: cat $GITHUB_EVENT_PATH
 
       - name: Check for release key
-        run: echo "HAS_RELEASE_KEY=$(jq 'has(\"release\")' $GITHUB_EVENT_PATH" >> $GITHUB_ENV
+        run: echo "HAS_RELEASE_KEY=$(jq 'has("release")' $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
 
       - name: Write release json
         if: ${{env.HAS_RELEASE_KEY== 'true'}}
