@@ -14,13 +14,21 @@ jobs:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
           service_account_key: ${{ secrets.GCP_BQ_METRICS_KEY }}
           export_default_credentials: true
-      - run: cat $GITHUB_EVENT_PATH
-      - run: 'jq -c ''.release |
+
+      - name: Debug event json
+        run: cat $GITHUB_EVENT_PATH
+
+      - name: Check for release key
+        run: echo "HAS_RELEASE_KEY=$(jq 'has("release")' $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
+
+      - name: Write release json
+        if: ${{env.HAS_RELEASE_KEY== 'true'}}
+        run: 'jq -c ''.release |
              {
                package_name: .name | split(" ")[0],
                name,
                tag_name,
-               version: .tag_name | split("-v")[1],
+               version: try(.tag_name | split("-v")[1]),
                html_url,
                target_commitish,
                created_at,
@@ -28,5 +36,11 @@ jobs:
                draft,
                prerelease
              }'' $GITHUB_EVENT_PATH > releases.json'
-      - run: cat releases.json
-#      - run: bq load --source_format=NEWLINE_DELIMITED_JSON metrics.releases releases.json
+
+      - name: Debug release json
+        if: ${{env.HAS_RELEASE_KEY== 'true'}}
+        run: cat releases.json
+
+      - name: Send release.json to BQ
+        if: ${{env.HAS_RELEASE_KEY== 'true'}}
+        run: bq load --source_format=NEWLINE_DELIMITED_JSON metrics.releases releases.json
