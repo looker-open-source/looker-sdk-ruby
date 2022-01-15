@@ -1,7 +1,7 @@
 ############################################################################################
 # The MIT License (MIT)
 #
-# Copyright (c) 2018 Looker Data Sciences, Inc.
+# Copyright (c) 2022 Looker Data Sciences, Inc.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -40,11 +40,11 @@ def sdk
     # Support self-signed cert *and* set longer timeout to allow for long running queries.
     :connection_options => {:ssl => {:verify => false}, :request => {:timeout => 60 * 60, :open_timeout => 30}},
 
-    :api_endpoint => "https://localhost:19999/api/3.0",
+    :api_endpoint => "https://localhost:20000/api/4.0",
 
     # Customize to use your specific looker instance
     # :connection_options => {:ssl => {:verify => true}},
-    # :api_endpoint => "https://looker.mycoolcompany.com:19999/api/3.0",
+    # :api_endpoint => "https://looker.mycoolcompany.com:19999/api/4.0",
   )
 end
 

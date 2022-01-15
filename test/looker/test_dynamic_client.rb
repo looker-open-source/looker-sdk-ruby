@@ -1,7 +1,7 @@
 ############################################################################################
 # The MIT License (MIT)
 #
-# Copyright (c) 2018 Looker Data Sciences, Inc.
+# Copyright (c) 2022 Looker Data Sciences, Inc.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -60,7 +60,7 @@ class LookerDynamicClientTest < MiniTest::Spec
     req = Rack::Request.new(env)
     req_body = req.body.gets || ''
 
-    req.base_url.must_equal 'https://localhost:19999'
+    req.base_url.must_equal 'https://localhost:20000'
     req.request_method.must_equal method.to_s.upcase
     req.path_info.must_equal path
 

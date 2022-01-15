@@ -1,7 +1,7 @@
 ############################################################################################
 # The MIT License (MIT)
 #
-# Copyright (c) 2018 Looker Data Sciences, Inc.
+# Copyright (c) 2022 Looker Data Sciences, Inc.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -36,10 +36,10 @@ def sdk
 
     # use my local looker with self-signed cert
     :connection_options => {:ssl => {:verify => false}},
-    :api_endpoint => "https://localhost:19999/api/3.0",
+    :api_endpoint => "https://localhost:20000/api/4.0",
 
     # use a real looker the way you are supposed to!
     # :connection_options => {:ssl => {:verify => true}},
-    # :api_endpoint => "https://mycoolcompany.looker.com:19999/api/3.0",
+    # :api_endpoint => "https://mycoolcompany.looker.com:19999/api/4.0",
   )
 end
