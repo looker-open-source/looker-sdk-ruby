@@ -30,7 +30,7 @@ describe LookerSDK::Client do
    setup_sdk
   end
 
-  base_url = ENV['LOOKERSDK_BASE_URL'] || 'https://localhost:20000'
+  base_url = ENV['LOOKERSDK_BASE_URL'] || 'https://localhost:19999'
   verify_ssl = case ENV['LOOKERSDK_VERIFY_SSL']
                when /false/i
                  false

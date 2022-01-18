@@ -36,7 +36,7 @@ def sdk
 
     # use my local looker with self-signed cert
     :connection_options => {:ssl => {:verify => false}},
-    :api_endpoint => "https://localhost:20000/api/4.0",
+    :api_endpoint => "https://localhost:19999/api/4.0",
 
     # use a real looker the way you are supposed to!
     # :connection_options => {:ssl => {:verify => true}},

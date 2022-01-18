@@ -40,7 +40,7 @@ def sdk
     # Support self-signed cert *and* set longer timeout to allow for long running queries.
     :connection_options => {:ssl => {:verify => false}, :request => {:timeout => 60 * 60, :open_timeout => 30}},
 
-    :api_endpoint => "https://localhost:20000/api/4.0",
+    :api_endpoint => "https://localhost:19999/api/4.0",
 
     # Customize to use your specific looker instance
     # :connection_options => {:ssl => {:verify => true}},

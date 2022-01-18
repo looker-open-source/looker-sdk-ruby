@@ -60,7 +60,7 @@ class LookerDynamicClientTest < MiniTest::Spec
     req = Rack::Request.new(env)
     req_body = req.body.gets || ''
 
-    req.base_url.must_equal 'https://localhost:20000'
+    req.base_url.must_equal 'https://localhost:19999'
     req.request_method.must_equal method.to_s.upcase
     req.path_info.must_equal path
 
