@@ -67,9 +67,11 @@ jobs:
 
       - name: Mock .netrc
         run: |
+          mkdir fixtures
           echo "machine localhost" > fixtures/.netrc
           echo "  login $LOOKERSDK_CLIENT_ID" >> fixtures/.netrc
           echo "  password $LOOKERSDK_CLIENT_SECRET" >> fixtures/.netrc
+          chmod 600 fixtures/.netrc
 
       - name: Check that Looker is ready
         run: |
