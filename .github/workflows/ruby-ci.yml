@@ -103,6 +103,7 @@ jobs:
       - name: Download Artifacts
         uses: actions/download-artifact@v2
         with:
+          name: ruby-ci-test-results
           path: artifacts
 
       - name: Publish Test Results
@@ -115,4 +116,4 @@ jobs:
           report_individual_runs: true
           hide_comments: orphaned commits
           check_run_annotations_branch: '*'
-          files: 'artifacts/*/*.xml'
+          files: 'artifacts/**/*.xml'
