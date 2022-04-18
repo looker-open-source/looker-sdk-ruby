@@ -25,4 +25,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'jruby-openssl' if s.platform == :jruby
   s.add_dependency 'sawyer', '~> 0.8'
   s.add_dependency 'faraday', ['>= 1.2', '< 2.0']
+  s.add_development_dependency 'ci_reporter_minitest', '~> 1.0'
 end
