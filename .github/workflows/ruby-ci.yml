@@ -115,5 +115,6 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           report_individual_runs: true
           hide_comments: orphaned commits
-          check_run_annotations_branch: '*'
+          check_run_annotations: 'none'
+          compare_to_earlier_commit: false
           files: 'artifacts/**/*.xml'
