@@ -67,7 +67,7 @@ jobs:
 
       - name: Mock .netrc
         run: |
-          mkdir test/fixtures
+          mkdir -p test/fixtures
           echo "machine localhost" > test/fixtures/.netrc
           echo "  login $LOOKERSDK_CLIENT_ID" >> test/fixtures/.netrc
           echo "  password $LOOKERSDK_CLIENT_SECRET" >> test/fixtures/.netrc
