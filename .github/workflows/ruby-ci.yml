@@ -67,11 +67,11 @@ jobs:
 
       - name: Mock .netrc
         run: |
-          mkdir fixtures
-          echo "machine localhost" > fixtures/.netrc
-          echo "  login $LOOKERSDK_CLIENT_ID" >> fixtures/.netrc
-          echo "  password $LOOKERSDK_CLIENT_SECRET" >> fixtures/.netrc
-          chmod 600 fixtures/.netrc
+          mkdir test/fixtures
+          echo "machine localhost" > test/fixtures/.netrc
+          echo "  login $LOOKERSDK_CLIENT_ID" >> test/fixtures/.netrc
+          echo "  password $LOOKERSDK_CLIENT_SECRET" >> test/fixtures/.netrc
+          chmod 600 test/fixtures/.netrc
 
       - name: Check that Looker is ready
         run: |
@@ -98,7 +98,7 @@ jobs:
       - name: remove mock .netrc
         if: ${{ always() }}
         run: |
-          rm fixtures/.netrc
+          rm test/fixtures/.netrc
 
       - name: Upload ts unit test results
         if: ${{ always() }}
