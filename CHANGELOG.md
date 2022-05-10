@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.3](https://www.github.com/looker-open-source/looker-sdk-ruby/compare/v0.1.2...v0.1.3) (2022-04-18)
+
+
+### Bug Fixes
+
+* rename readme.md to more common README.md ([83aa2c7](https://www.github.com/looker-open-source/looker-sdk-ruby/commit/83aa2c788c60c7a305b7af40990e75128353cb8d))
+
 ### [0.1.2](https://www.github.com/looker-open-source/looker-sdk-ruby/compare/v0.1.1...v0.1.2) (2021-11-19)
 
 
