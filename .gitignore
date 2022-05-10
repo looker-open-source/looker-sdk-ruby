@@ -11,6 +11,7 @@
 *.sass-cache
 *.iml
 
+
 # OS or Editor folders
 .DS_Store
 .cache
@@ -25,6 +26,8 @@ intermediate
 publish
 target
 .idea
+.direnv
+.env
 out
 
 # markdown previews

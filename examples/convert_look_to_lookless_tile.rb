@@ -1,7 +1,7 @@
 ############################################################################################
 # The MIT License (MIT)
 #
-# Copyright (c) 2018 Looker Data Sciences, Inc.
+# Copyright (c) 2022 Looker Data Sciences, Inc.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -31,7 +31,7 @@ sdk = LookerSDK::Client.new(
   :client_id => ENV['KEY'],
   :client_secret => ENV['SECRET'],
 
-  # API 3.1 URL would look like: https://myhost.com:19999/api/3.1
+  # API 4.0 URL would look like: https://myhost.com:19999/api/4.0
   :api_endpoint => ENV['URL']
 )
 #Set the dashboard here.
