@@ -25,6 +25,10 @@
 require "bundler/gem_tasks"
 
 require "rake/testtask"
+require 'ci/reporter/rake/minitest'
+
+task :minitest => 'ci:setup:minitest'
+task test: 'minitest'
 Rake::TestTask.new do |t|
   t.libs << "test"
   t.test_files = FileList["test/**/test_*.rb"]
