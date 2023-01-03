@@ -1,7 +1,7 @@
 ############################################################################################
 # The MIT License (MIT)
 #
-# Copyright (c) 2018 Looker Data Sciences, Inc.
+# Copyright (c) 2022 Looker Data Sciences, Inc.
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -61,7 +61,7 @@ end
 def setup_sdk
   LookerSDK.reset!
 
-  base_url = ENV['LOOKERSDK_BASE_URL'] || 'https://localhost:20000'
+  base_url = ENV['LOOKERSDK_BASE_URL'] || 'https://localhost:19999'
   verify_ssl = case ENV['LOOKERSDK_VERIFY_SSL']
                when /false/i
                  false
