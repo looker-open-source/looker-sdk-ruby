@@ -2,7 +2,7 @@ PATH
   remote: .
   specs:
     looker-sdk (0.1.2)
-      faraday (>= 1.2, < 2.0)
+      faraday (>= 1.2, < 3.0)
       sawyer (~> 0.8)
 
 GEM
