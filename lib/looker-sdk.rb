@@ -30,20 +30,23 @@ require 'faraday'
 # by the looker-sdk to prevent a race condition later.
 # See https://github.com/lostisland/faraday/issues/181
 # and https://bugs.ruby-lang.org/issues/921
-require 'faraday/autoload'
-require 'faraday/adapter'
-require 'faraday/adapter/rack'
-require 'faraday/adapter/net_http'
-require 'faraday/connection'
-require 'faraday/error'
-require 'faraday/middleware'
-require 'faraday/options'
-require 'faraday/parameters'
-require 'faraday/rack_builder'
-require 'faraday/request'
-require 'faraday/request/authorization'
-require 'faraday/response'
-require 'faraday/utils'
+# NOTE: This is not required for Faraday 2+
+if Gem.loaded_specs['faraday'].version < Gem::Version.new('2.0')
+  require 'faraday/autoload'
+  require 'faraday/adapter'
+  require 'faraday/adapter/rack'
+  require 'faraday/adapter/net_http'
+  require 'faraday/connection'
+  require 'faraday/error'
+  require 'faraday/middleware'
+  require 'faraday/options'
+  require 'faraday/parameters'
+  require 'faraday/rack_builder'
+  require 'faraday/request'
+  require 'faraday/request/authorization'
+  require 'faraday/response'
+  require 'faraday/utils'
+end
 
 #require 'rack'
 #require 'rack/mock_response'
