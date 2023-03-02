@@ -146,6 +146,7 @@ module LookerSDK
       summary << data[:errors].map do |hash|
         hash.map { |k,v| "  #{k}: #{v}" }
       end.join("\n")
+      summary << "\n"
 
       summary
     end
