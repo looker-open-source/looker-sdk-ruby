@@ -29,3 +29,19 @@ begin
 rescue LookerSDK::Error => e
   puts e
 end
+
+puts "\n\n"
+
+begin
+  puts sdk.connection("foo").inspect
+rescue LookerSDK::Error => e
+  puts e
+end
+
+puts "\n\n"
+
+begin
+  puts sdk.run_look(1,"foo").inspect
+rescue LookerSDK::Error => e
+  puts e
+end
