@@ -76,6 +76,40 @@ module LookerSDK
       response_message
     end
 
+    # Error Doc URL
+    #
+    # @return [String]
+    def error_doc_url(documentation_url)
+      return nil unless documentation_url
+      regexp = Regexp.new("https://(?<redirector>docs\.looker\.com\|cloud\.google\.com/looker/docs)/r/err/(?<api_version>.*)/(?<status_code>\\d{3})(?<api_path>.*)", Regexp::IGNORECASE)
+      match_data = regexp.match documentation_url
+      return nil unless match_data
+
+      key = "#{match_data[:status_code]}#{match_data[:api_path].gsub(/\/:([^\/]+)/,"/{\\1}")}"
+      error_doc = error_docs[key] || error_docs[match_data[:status_code]]
+      return nil unless error_doc
+
+      return "https://marketplace-api.looker.com/errorcodes/#{error_doc[:url]}"
+    end
+
+    def error_docs
+      @error_docs ||=
+        begin
+          sawyer_options = {
+            :links_parser => Sawyer::LinkParsers::Simple.new,
+            :serializer  => LookerSDK::Client::Serializer.new(JSON),
+            :faraday => Faraday.new
+          }
+
+          agent = Sawyer::Agent.new("https://marketplace-api.looker.com", sawyer_options) do |http|
+            http.headers[:accept] = 'application/json'
+            #http.headers[:user_agent] = conn_hash[:user_agent]
+          end
+          response = agent.call(:get,"/errorcodes/index.json")
+          response.data || []
+        end
+    end
+
     # Returns most appropriate error for 401 HTTP status code
     # @private
     def self.error_for_401(headers)
@@ -142,6 +176,10 @@ module LookerSDK
     def response_error_summary
       return nil unless data.is_a?(Hash) && !Array(data[:errors]).empty?
 
+      data[:errors].each do |e|
+        edu = error_doc_url(e[:documentation_url])
+        e[:error_doc_url] = edu if edu
+      end
       summary = "\nError summary:\n"
       summary << data[:errors].map do |hash|
         hash.map { |k,v| "  #{k}: #{v}" }
@@ -159,7 +197,8 @@ module LookerSDK
       message << "#{response_message}" unless response_message.nil?
       message << "#{response_error}" unless response_error.nil?
       message << "#{response_error_summary}" unless response_error_summary.nil?
-      message << " // See: #{documentation_url}" unless documentation_url.nil?
+      message << "\n // See: #{documentation_url}" unless documentation_url.nil?
+      message << "\n // And: #{error_doc_url(documentation_url)}" unless error_doc_url(documentation_url).nil?
       message
     end
 
