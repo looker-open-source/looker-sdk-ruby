@@ -26,4 +26,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'sawyer', '~> 0.8'
   s.add_dependency 'faraday', ['>= 1.2', '< 3.0']
   s.add_development_dependency 'ci_reporter_minitest', '~> 1.0'
+  s.add_development_dependency 'faraday', '~> 1.10'
 end
