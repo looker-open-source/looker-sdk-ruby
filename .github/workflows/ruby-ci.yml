@@ -93,7 +93,7 @@ jobs:
         if: failure()
 
       - name: Run tests
-        run: bundle exec rake test
+        run: bundle exec rake test --trace
 
       - name: remove mock .netrc
         if: ${{ always() }}
