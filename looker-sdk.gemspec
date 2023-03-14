@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
       'the Looker data analytics engine to fetch data or render visualizations defined in your Looker data models. '+
       'For more information, see https://looker.com.'
   s.license     = 'MIT'
-  s.required_ruby_version = '>= 2.5'
+  s.required_ruby_version = '>= 2.7'
   s.requirements = 'Looker version 4.0 or later'  # informational
 
   s.files         = `git ls-files`.split("\n")
@@ -26,4 +26,5 @@ Gem::Specification.new do |s|
   s.add_dependency 'sawyer', '~> 0.8'
   s.add_dependency 'faraday', ['>= 1.2', '< 3.0']
   s.add_development_dependency 'ci_reporter_minitest', '~> 1.0'
+  s.add_development_dependency 'faraday', '~> 1.10'
 end
