@@ -6,6 +6,7 @@
 ### Features
 
 * upgrade faraday dependency ([#108](https://www.github.com/looker-open-source/looker-sdk-ruby/issues/108)) ([0abdea6](https://www.github.com/looker-open-source/looker-sdk-ruby/commit/0abdea60e579a104e4f060a9ca9b3cd7ae17d7b0))
+### [0.1.3](https://www.github.com/looker-open-source/looker-sdk-ruby/compare/v0.1.2...v0.1.3) (2023-03-11)
 
 
 ### Bug Fixes
