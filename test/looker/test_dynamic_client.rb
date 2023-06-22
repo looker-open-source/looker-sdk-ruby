@@ -223,7 +223,12 @@ class LookerDynamicClientTest < MiniTest::Spec
     it "post with file upload" do
       verify(response, :post, '/api/3.0/users', {first_name:'Joe', last_name:'User'}, {}, "application/vnd.BOGUS3+json") do |sdk|
         name = File.join(File.dirname(__FILE__), 'user.json')
-        sdk.create_user(Faraday::UploadIO.new(name, "application/vnd.BOGUS3+json"))
+        if Gem.loaded_specs['faraday'].version < Gem::Version.new('2.0')
+          sdk.create_user(Faraday::UploadIO.new(name, "application/vnd.BOGUS3+json"))
+        else
+          sdk.create_user(Faraday::FilePart.new(name, "application/vnd.BOGUS3+json"))
+        end
+
       end
     end
 
