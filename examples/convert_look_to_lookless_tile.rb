@@ -25,7 +25,7 @@
 require 'looker-sdk'
 require 'json'
 
-# Note that this example requires API 3.1 for new dashboard element manipulation functions
+# Note that this example requires API 3.1 or greater for new dashboard element manipulation functions
 
 sdk = LookerSDK::Client.new(
   :client_id => ENV['KEY'],
