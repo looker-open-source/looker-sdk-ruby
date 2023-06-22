@@ -102,7 +102,7 @@ jobs:
       - name: remove mock .netrc
         if: ${{ always() }}
         run: |
-          rm test/fixtures/.netrc
+          rm -f test/fixtures/.netrc
 
       - name: Upload ts unit test results
         if: ${{ always() }}
