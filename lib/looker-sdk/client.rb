@@ -476,7 +476,7 @@ module LookerSDK
 
     def merge_content_type_if_body(body, options = {})
       if body
-        type = Gem.loaded_specs['faraday'].version < Gem::Version.new('2.0') ? Faraday::UploadIO: Faraday::FilePart
+        type = Gem.loaded_specs['faraday'].version < Gem::Version.new('2.0') ? Faraday::UploadIO : Faraday::FilePart
 
         if body.kind_of?(type)
           length = File.new(body.local_path).size.to_s
