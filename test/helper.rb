@@ -41,6 +41,8 @@ require 'minitest/mock'
 require 'mocha/mini_test'
 require "rack/test"
 require "rack/request"
+require "faraday/rack"
+require "faraday/multipart"
 
 def fixture_path
   File.expand_path("../fixtures", __FILE__)
