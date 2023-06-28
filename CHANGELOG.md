@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.6](https://github.com/looker-open-source/looker-sdk-ruby/compare/v0.1.5...v0.1.6) (2023-06-28)
+
+
+### Bug Fixes
+
+* Deprecated Faraday::Request.method changed to http_method ([c3f74bd](https://github.com/looker-open-source/looker-sdk-ruby/commit/c3f74bdbaeb0ec6cc7ed10e2f395b7273cb80783))
+
 ## [0.1.5](https://github.com/looker-open-source/looker-sdk-ruby/compare/v0.1.4...v0.1.5) (2023-06-28)
 
 
