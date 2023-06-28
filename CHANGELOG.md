@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.5](https://github.com/looker-open-source/looker-sdk-ruby/compare/v0.1.4...v0.1.5) (2023-06-28)
+
+
+### Bug Fixes
+
+* updated redcarpet dependency to account for an injection vulnerability which can enable a cross-site scripting attack. ([f325228](https://github.com/looker-open-source/looker-sdk-ruby/commit/f32522897157887d0bf446b8c5b27c57d8e533b9))
+
 ### [0.1.4](https://www.github.com/looker-open-source/looker-sdk-ruby/compare/v0.1.3...v0.1.4) (2023-03-14)
 
 
