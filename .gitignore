@@ -10,7 +10,7 @@
 *~
 *.sass-cache
 *.iml
-
+.ruby-version
 
 # OS or Editor folders
 .DS_Store
@@ -55,3 +55,6 @@ tmp
 
 # credentials for testing
 .netrc
+
+# test output
+/test/reports/**
