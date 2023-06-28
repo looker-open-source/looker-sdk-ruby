@@ -370,12 +370,12 @@ module LookerSDK
         path_with_query = uri.query ? "#{uri.path}?#{uri.query}" : uri.path
 
         http_request = (
-          case request.method
+          case request.http_method
           when :get     then Net::HTTP::Get
           when :post    then Net::HTTP::Post
           when :put     then Net::HTTP::Put
           when :patch   then Net::HTTP::Patch
-          else raise "Stream to block not supported for '#{request.method}'"
+          else raise "Stream to block not supported for '#{request.http_method}'"
           end
         ).new(path_with_query, request.headers)
 
