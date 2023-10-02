@@ -1803,7 +1803,7 @@
         "documentation_url"
       ]
     },
-     "Role": {
+    "Role": {
       "properties": {
         "id": {
           "type": "integer",
@@ -2023,7 +2023,7 @@
         "is_looker_employee": {
           "type": "boolean",
           "readOnly": true,
-          "description": "User is identified as an emplpoyee of Looker"
+          "description": "User is identified as an employee of Looker"
         },
         "url": {
           "type": "string",
