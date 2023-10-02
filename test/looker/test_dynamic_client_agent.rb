@@ -71,7 +71,7 @@ describe LookerSDK::Client::Dynamic do
       end
     end
 
-    it "get with parms" do
+    it "get with params" do
       mock = MiniTest::Mock.new.expect(:call, response, [:get, '/api/3.0/users/25', nil, {}])
       with_stub(Sawyer::Agent, :new, mock) do
         sdk.user(25)
