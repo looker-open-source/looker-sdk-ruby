@@ -28,6 +28,7 @@ jobs:
       matrix:
         ruby-version: [2.7.7]
         looker: ${{ fromJson(needs.setup.outputs.matrix_json) }}
+        use_faraday_multipart: ['true', 'false']
 
     steps:
       - name: Cancel Previous Runs
@@ -98,6 +99,8 @@ jobs:
 
       - name: Run tests
         run: bundle exec rake test --trace
+        env:
+          USE_FARADAY_MULTIPART: ${{ matrix.use_faraday_multipart }}
 
       - name: remove mock .netrc
         if: ${{ always() }}
