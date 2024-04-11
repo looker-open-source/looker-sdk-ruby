@@ -18,8 +18,8 @@ Gem::Specification.new do |s|
   s.required_ruby_version = '>= 2.7'
   s.requirements = 'Looker version 4.0 or later'  # informational
 
-  s.files         = `git ls-files`.split("\n")
-  s.test_files    = `git ls-files -- {test}/*`.split("\n")
+  s.files         = Dir["lib/**/*", "*.md"]
+  s.test_files    = Dir["test/**/*"]
   s.executables   = `git ls-files -- bin/*`.split("\n").map{ |f| File.basename(f) }
   s.require_paths = %w(lib)
   s.add_dependency 'jruby-openssl' if s.platform == :jruby
