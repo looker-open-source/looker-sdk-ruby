@@ -6,7 +6,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rake', '~> 13.0.3'
+  gem 'rake', '~> 13.2.1'
 end
 
 group :test do
