@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    looker-sdk (0.1.6)
+    looker-sdk (0.1.9)
       faraday (>= 1.2, < 3.0)
       sawyer (~> 0.8)
 
@@ -34,12 +34,13 @@ GEM
     multipart-post (2.3.0)
     netrc (0.7.9)
     public_suffix (5.0.1)
-    rack (2.2.7)
+    rack (2.2.8.1)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
-    rake (13.0.6)
+    rake (13.2.1)
     redcarpet (3.5.1)
-    rexml (3.2.5)
+    rexml (3.3.3)
+      strscan
     ruby2_keywords (0.0.5)
     sawyer (0.9.2)
       addressable (>= 2.3.5)
@@ -48,6 +49,7 @@ GEM
       multi_json (~> 1.0)
       simplecov-html (~> 0.7.1)
     simplecov-html (0.7.1)
+    strscan (3.1.0)
 
 PLATFORMS
   arm64-darwin-22
@@ -63,9 +65,9 @@ DEPENDENCIES
   minitest (~> 5.11.0)
   mocha (~> 1.1.0)
   netrc (~> 0.7.7)
-  rack (~> 2.2.7)
+  rack (~> 2.2.8)
   rack-test (~> 1)
-  rake (~> 13.0.3)
+  rake (~> 13.2.1)
   redcarpet (~> 3.5.1)
   simplecov (~> 0.7.1)
 

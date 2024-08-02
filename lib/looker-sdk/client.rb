@@ -164,7 +164,7 @@ module LookerSDK
     #
     # @param url [String] The path, relative to {#api_endpoint}
     # @param options [Hash] Query and header params for request
-    # @param block [Block] Block to perform the data concatination of the
+    # @param block [Block] Block to perform the data concatenation of the
     #   multiple requests. The block is called with two parameters, the first
     #   contains the contents of the requests so far and the second parameter
     #   contains the latest response.
@@ -423,7 +423,7 @@ module LookerSDK
         if Gem.loaded_specs['faraday'].version < Gem::Version.new('2.0')
           data.kind_of?(Faraday::UploadIO) ? data : super
         else
-          data.kind_of?(Faraday::FilePart) ? data : super
+          defined?(Faraday::FilePart) && data.kind_of?(Faraday::FilePart) ? data : super
         end
       end
 
@@ -476,9 +476,11 @@ module LookerSDK
 
     def merge_content_type_if_body(body, options = {})
       if body
-        type = Gem.loaded_specs['faraday'].version < Gem::Version.new('2.0') ? Faraday::UploadIO : Faraday::FilePart
+        multipart = Gem.loaded_specs['faraday'].version < Gem::Version.new('2.0') ?
+          body.kind_of?(Faraday::UploadIO) :
+          defined?(Faraday::FilePart) && body.kind_of?(Faraday::FilePart)
 
-        if body.kind_of?(type)
+        if multipart
           length = File.new(body.local_path).size.to_s
           headers = {:content_type => body.content_type, :content_length => length}.merge(options[:headers] || {})
         else
