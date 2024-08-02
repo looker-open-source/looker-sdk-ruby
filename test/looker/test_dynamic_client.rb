@@ -226,9 +226,9 @@ class LookerDynamicClientTest < MiniTest::Spec
         if Gem.loaded_specs['faraday'].version < Gem::Version.new('2.0')
           sdk.create_user(Faraday::UploadIO.new(name, "application/vnd.BOGUS3+json"))
         else
+          skip unless defined?(Faraday::FilePart)
           sdk.create_user(Faraday::FilePart.new(name, "application/vnd.BOGUS3+json"))
         end
-
       end
     end
 

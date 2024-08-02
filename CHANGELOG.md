@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.1.7](https://github.com/looker-open-source/looker-sdk-ruby/compare/v0.1.6...v0.1.7) (2024-01-19)
+
+
+### Bug Fixes
+
+* **deps:** Fix for faraday multipart disabled ([2255a4e](https://github.com/looker-open-source/looker-sdk-ruby/commit/2255a4e4d67b87c06cefe87d945e9e11ae069465))
+
 ## [0.1.6](https://github.com/looker-open-source/looker-sdk-ruby/compare/v0.1.5...v0.1.6) (2023-06-28)
 
 
