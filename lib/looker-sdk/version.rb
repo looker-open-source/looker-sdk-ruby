@@ -26,6 +26,6 @@ module LookerSDK
 
   # Current version
   # @return [String]
-  VERSION = "0.1.7"
+  VERSION = "0.1.9"
 
 end

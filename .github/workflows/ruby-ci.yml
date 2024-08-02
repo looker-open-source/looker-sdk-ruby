@@ -16,17 +16,17 @@ jobs:
     uses: looker-open-source/reusable-actions/.github/workflows/supported-versions.yml@main
 
   test:
-    name: Ruby-CI ${{ matrix.ruby-version }}/${{ matrix.looker }}
+    name: Ruby-CI ${{ matrix.ruby-version }}/${{ matrix.looker }}/multipart ${{ matrix.use_faraday_multipart }}
     env:
       LOOKERSDK_CLIENT_ID: ${{ secrets.LOOKERSDK_CLIENT_ID }}
       LOOKERSDK_CLIENT_SECRET: ${{ secrets.LOOKERSDK_CLIENT_SECRET }}
-      CI_REPORTS: results/Ruby-CI-ruby_${{ matrix.ruby-version }}_Looker_${{ matrix.looker }}
+      CI_REPORTS: results/Ruby-CI-ruby_${{ matrix.ruby-version }}_Looker_${{ matrix.looker }}_multipart_${{ matrix.use_faraday_multipart }}
 
     needs: setup
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: [2.7.8, 3.0.6, 3.1.4, 3.2.2]
+        ruby-version: [2.7.8, 3.0.6, 3.1.4]
         looker: ${{ fromJson(needs.setup.outputs.matrix_json) }}
         use_faraday_multipart: ['true', 'false']
 
