@@ -287,21 +287,21 @@ describe LookerSDK::Client do
     end
 
     [
-        [:get, '/api/3.0/users/foo%2Fbar', false],
-        [:get, '/api/3.0/users/foo%252Fbar', true],
-        [:post, '/api/3.0/users/foo%2Fbar', false],
-        [:post, '/api/3.0/users/foo%252Fbar', true],
-        [:put, '/api/3.0/users/foo%2Fbar', false],
-        [:put, '/api/3.0/users/foo%252Fbar', true],
-        [:patch, '/api/3.0/users/foo%2Fbar', false],
-        [:patch, '/api/3.0/users/foo%252Fbar', true],
-        [:delete, '/api/3.0/users/foo%2Fbar', false],
-        [:delete, '/api/3.0/users/foo%252Fbar', true],
-        [:head, '/api/3.0/users/foo%2Fbar', false],
-        [:head, '/api/3.0/users/foo%252Fbar', true],
+        [:get, '/api/4.0/users/foo%2Fbar', false],
+        [:get, '/api/4.0/users/foo%252Fbar', true],
+        [:post, '/api/4.0/users/foo%2Fbar', false],
+        [:post, '/api/4.0/users/foo%252Fbar', true],
+        [:put, '/api/4.0/users/foo%2Fbar', false],
+        [:put, '/api/4.0/users/foo%252Fbar', true],
+        [:patch, '/api/4.0/users/foo%2Fbar', false],
+        [:patch, '/api/4.0/users/foo%252Fbar', true],
+        [:delete, '/api/4.0/users/foo%2Fbar', false],
+        [:delete, '/api/4.0/users/foo%252Fbar', true],
+        [:head, '/api/4.0/users/foo%2Fbar', false],
+        [:head, '/api/4.0/users/foo%252Fbar', true],
     ].each do |method, path, encoded|
       it "handles request path encoding" do
-        expected_path = '/api/3.0/users/foo%252Fbar'
+        expected_path = '/api/4.0/users/foo%252Fbar'
 
         resp = OpenStruct.new(:data => "hi", :status => 204)
         mock = MiniTest::Mock.new.expect(:call, resp, [method, expected_path, nil, {}])

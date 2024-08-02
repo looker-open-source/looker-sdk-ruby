@@ -128,130 +128,132 @@ class LookerDynamicClientTest < MiniTest::Spec
 
     describe "operation maps" do
       it "invoke by string operationId" do
-        verify(response, :get, '/api/3.0/user') do |sdk|
+        verify(response, :get, '/api/4.0/user') do |sdk|
           sdk.invoke('me')
         end
       end
 
       it "invoke by symbol operationId" do
-        verify(response, :get, '/api/3.0/user') do |sdk|
+        verify(response, :get, '/api/4.0/user') do |sdk|
           sdk.invoke(:me)
         end
       end
     end
 
     it "get no params" do
-      verify(response, :get, '/api/3.0/user') do |sdk|
+      verify(response, :get, '/api/4.0/user') do |sdk|
         sdk.me
       end
     end
 
     it "get with params" do
-      verify(response, :get, '/api/3.0/users/25') do |sdk|
+      verify(response, :get, '/api/4.0/users/25') do |sdk|
         sdk.user(25)
       end
     end
 
     it "get with params that need encoding" do
-      verify(response, :get, '/api/3.0/users/foo%2Fbar') do |sdk|
+      verify(response, :get, '/api/4.0/users/foo%2Fbar') do |sdk|
         sdk.user("foo/bar")
       end
     end
 
     it "get with params already encoded" do
-        verify(response, :get, '/api/3.0/users/foo%2Fbar') do |sdk|
+        verify(response, :get, '/api/4.0/users/foo%2Fbar') do |sdk|
         sdk.user("foo%2Fbar")
       end
     end
 
     it "get with query" do
-      verify(response, :get, '/api/3.0/user', '', {bar:"foo"}) do |sdk|
+      verify(response, :get, '/api/4.0/user', '', {bar:"foo"}) do |sdk|
         sdk.me({bar:'foo'})
       end
     end
 
     it "get with params and query" do
-      verify(response, :get, '/api/3.0/users/25', '', {bar:"foo"}) do |sdk|
+      verify(response, :get, '/api/4.0/users/25', '', {bar:"foo"}) do |sdk|
         sdk.user(25, {bar:'foo'})
       end
     end
 
     it "get with array query param - string input (csv)" do
-      verify(response, :get, '/api/3.0/users/1/attribute_values','',{user_attribute_ids: '2,3,4'}) do |sdk|
+      verify(response, :get, '/api/4.0/users/1/attribute_values','',{user_attribute_ids: '2,3,4'}) do |sdk|
         sdk.user_attribute_user_values(1, {user_attribute_ids: '2,3,4'})
         sdk.last_response.env.url.query.must_equal 'user_attribute_ids=2%2C3%2C4'
       end
     end
 
     it "get with array query param - array input (multi[])" do
-      verify(response, :get, '/api/3.0/users/1/attribute_values','',{user_attribute_ids: ['2','3','4']}) do |sdk|
+      verify(response, :get, '/api/4.0/users/1/attribute_values','',{user_attribute_ids: ['2','3','4']}) do |sdk|
         sdk.user_attribute_user_values(1, {user_attribute_ids: [2,3,4]})
         sdk.last_response.env.url.query.must_equal 'user_attribute_ids%5B%5D=2&user_attribute_ids%5B%5D=3&user_attribute_ids%5B%5D=4'
       end
     end
 
     it "post" do
-      verify(response, :post, '/api/3.0/users', {first_name:'Joe'}) do |sdk|
+      verify(response, :post, '/api/4.0/users', {first_name:'Joe'}) do |sdk|
         sdk.create_user({first_name:'Joe'})
       end
     end
 
     it "post with default body" do
-      verify(response, :post, '/api/3.0/users', {}) do |sdk|
+      verify(response, :post, '/api/4.0/users', {}) do |sdk|
         sdk.create_user()
       end
     end
 
     it "post with default body and default content_type" do
-      verify(response, :post, '/api/3.0/users', {}, {}, "application/json") do |sdk|
+      verify(response, :post, '/api/4.0/users', {}, {}, "application/json") do |sdk|
         sdk.create_user()
       end
     end
 
     it "post with default body and specific content_type at option-level" do
-      verify(response, :post, '/api/3.0/users', {}, {}, "application/vnd.BOGUS1+json") do |sdk|
+      verify(response, :post, '/api/4.0/users', {}, {}, "application/vnd.BOGUS1+json") do |sdk|
         sdk.create_user({}, {:content_type => "application/vnd.BOGUS1+json"})
       end
     end
 
     it "post with default body and specific content_type in headers" do
-      verify(response, :post, '/api/3.0/users', {}, {}, "application/vnd.BOGUS2+json") do |sdk|
+      verify(response, :post, '/api/4.0/users', {}, {}, "application/vnd.BOGUS2+json") do |sdk|
         sdk.create_user({}, {:headers => {:content_type => "application/vnd.BOGUS2+json"}})
       end
     end
 
-    it "post with file upload" do
-      verify(response, :post, '/api/3.0/users', {first_name:'Joe', last_name:'User'}, {}, "application/vnd.BOGUS3+json") do |sdk|
-        name = File.join(File.dirname(__FILE__), 'user.json')
-        if Gem.loaded_specs['faraday'].version < Gem::Version.new('2.0')
-          sdk.create_user(Faraday::UploadIO.new(name, "application/vnd.BOGUS3+json"))
-        else
-          skip unless defined?(Faraday::FilePart)
-          sdk.create_user(Faraday::FilePart.new(name, "application/vnd.BOGUS3+json"))
+    if defined?(Faraday::FilePart) or Gem.loaded_specs['faraday'].version < Gem::Version.new('2.0')
+      it "post with file upload" do
+        #skip 'not required with this version'
+        verify(response, :post, '/api/4.0/users', {first_name:'Joe', last_name:'User'}, {}, "application/vnd.BOGUS3+json") do |sdk|
+          name = File.join(File.dirname(__FILE__), 'user.json')
+          if Gem.loaded_specs['faraday'].version < Gem::Version.new('2.0')
+            sdk.create_user(Faraday::UploadIO.new(name, "application/vnd.BOGUS3+json"))
+          else
+            sdk.create_user(Faraday::FilePart.new(name, "application/vnd.BOGUS3+json"))
+          end
         end
       end
     end
 
     it "patch" do
-      verify(response, :patch, '/api/3.0/users/25', {first_name:'Jim'}) do |sdk|
+      verify(response, :patch, '/api/4.0/users/25', {first_name:'Jim'}) do |sdk|
         sdk.update_user(25, {first_name:'Jim'})
       end
     end
 
     it "patch with query" do
-      verify(response, :post, '/api/3.0/users', {first_name:'Jim'}, {foo:'bar', baz:'bla'}) do |sdk|
+      verify(response, :post, '/api/4.0/users', {first_name:'Jim'}, {foo:'bar', baz:'bla'}) do |sdk|
         sdk.create_user({first_name:'Jim'}, {foo:'bar', baz:'bla'})
       end
     end
 
     it "put" do
-      verify(response, :put, '/api/3.0/users/25/roles', [10, 20]) do |sdk|
+      verify(response, :put, '/api/4.0/users/25/roles', [10, 20]) do |sdk|
         sdk.set_user_roles(25, [10,20])
       end
     end
 
     it "delete" do
-      verify(delete_response, :delete, '/api/3.0/users/25') do |sdk|
+      verify(delete_response, :delete, '/api/4.0/users/25') do |sdk|
         sdk.delete_user(25)
       end
     end
