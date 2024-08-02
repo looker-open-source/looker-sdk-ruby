@@ -220,17 +220,19 @@ class LookerDynamicClientTest < MiniTest::Spec
       end
     end
 
-    #it "post with file upload" do
-    #  verify(response, :post, '/api/4.0/users', {first_name:'Joe', last_name:'User'}, {}, "application/vnd.BOGUS3+json") do |sdk|
-    #    name = File.join(File.dirname(__FILE__), 'user.json')
-    #    if Gem.loaded_specs['faraday'].version < Gem::Version.new('2.0')
-    #      sdk.create_user(Faraday::UploadIO.new(name, "application/vnd.BOGUS3+json"))
-    #    else
-    #      skip unless defined?(Faraday::FilePart)
-    #      sdk.create_user(Faraday::FilePart.new(name, "application/vnd.BOGUS3+json"))
-    #    end
-    #  end
-    #end
+    if defined?(Faraday::FilePart) or Gem.loaded_specs['faraday'].version < Gem::Version.new('2.0')
+      it "post with file upload" do
+        #skip 'not required with this version'
+        verify(response, :post, '/api/4.0/users', {first_name:'Joe', last_name:'User'}, {}, "application/vnd.BOGUS3+json") do |sdk|
+          name = File.join(File.dirname(__FILE__), 'user.json')
+          if Gem.loaded_specs['faraday'].version < Gem::Version.new('2.0')
+            sdk.create_user(Faraday::UploadIO.new(name, "application/vnd.BOGUS3+json"))
+          else
+            sdk.create_user(Faraday::FilePart.new(name, "application/vnd.BOGUS3+json"))
+          end
+        end
+      end
+    end
 
     it "patch" do
       verify(response, :patch, '/api/4.0/users/25', {first_name:'Jim'}) do |sdk|
