@@ -16,7 +16,7 @@ group :test do
   gem 'rack', '~> 2.2.8'
   gem 'rack-test', '~> 1'
   gem 'netrc', '~> 0.7.7'
-  gem 'simplecov', '~> 0.7.1', :require => false
+  gem 'simplecov', '~> 0.22.0', :require => false
 end
 
 gemspec
