@@ -32,11 +32,11 @@ jobs:
 
     steps:
       - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.11.0
+        uses: styfle/cancel-workflow-action@0.12.1
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2.1.3
@@ -47,7 +47,7 @@ jobs:
           export_environment_variables: true
 
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v2.1.0
+        uses: google-github-actions/setup-gcloud@v2
 
       - name: Authenticate Artifact Repository
         run: gcloud auth configure-docker us-west1-docker.pkg.dev --quiet
@@ -109,9 +109,9 @@ jobs:
 
       - name: Upload ts unit test results
         if: ${{ always() }}
-        uses: actions/upload-artifact@v3.1.2
+        uses: actions/upload-artifact@v4
         with:
-          name: ruby-ci-test-results
+          name: ruby-ci-test-results-ruby_${{ matrix.ruby-version }}_Looker_${{ matrix.looker }}_multipart_${{ matrix.use_faraday_multipart }}
           path: results/
 
   publish-test-results:
@@ -121,20 +121,18 @@ jobs:
 
     steps:
       - name: Download Artifacts
-        uses: actions/download-artifact@v3
+        uses: actions/download-artifact@v4
         with:
-          name: ruby-ci-test-results
           path: artifacts
 
       - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v1.12
+        uses: EnricoMi/publish-unit-test-result-action@v2
         with:
           # Cosmetic issue with `check_name` being associated to the wrong
           # workflow: https://github.com/EnricoMi/publish-unit-test-result-action/issues/12
           check_name: Ruby-CI Tests
           github_token: ${{ secrets.GITHUB_TOKEN }}
           report_individual_runs: true
-          hide_comments: orphaned commits
           check_run_annotations: 'none'
           compare_to_earlier_commit: false
           files: 'artifacts/**/*.xml'
