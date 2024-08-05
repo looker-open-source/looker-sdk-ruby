@@ -14,8 +14,8 @@ group :test do
   gem 'minitest', '~> 5.11.0'
   gem 'mocha', '~> 1.1.0'
   gem 'rack', '~> 2.2.8'
-  gem 'rack-test', '~> 1'
   gem 'netrc', '~> 0.11.0'
+  gem 'rack-test', '~> 2'
   gem 'simplecov', '~> 0.22.0', :require => false
 end
 
