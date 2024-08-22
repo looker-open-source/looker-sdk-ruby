@@ -39,7 +39,7 @@ GEM
       rack (>= 1.0, < 3)
     rake (13.2.1)
     redcarpet (3.5.1)
-    rexml (3.3.3)
+    rexml (3.3.6)
       strscan
     ruby2_keywords (0.0.5)
     sawyer (0.9.2)
