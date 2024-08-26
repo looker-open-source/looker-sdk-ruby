@@ -11,7 +11,7 @@ jobs:
   release-please:
     runs-on: ubuntu-latest
     steps:
-      - uses: GoogleCloudPlatform/release-please-action@v3
+      - uses: GoogleCloudPlatform/release-please-action@v4
         id: release
         with:
           release-type: ruby
@@ -21,7 +21,7 @@ jobs:
           version-file: "lib/looker-sdk/version.rb"
           token: ${{ secrets.LOS_AUTO_BOT_RP_TOKEN }}
       # Checkout code if release was created
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         if: ${{ steps.release.outputs.release_created }}
       # Setup ruby if a release was created
       - uses: ruby/setup-ruby@v1
