@@ -23,9 +23,7 @@
 ############################################################################################
 
 require 'simplecov'
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
-    SimpleCov::Formatter::HTMLFormatter
-]
+SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new SimpleCov::Formatter::HTMLFormatter
 SimpleCov.start
 
 require 'rubygems'
@@ -38,11 +36,19 @@ require 'looker-sdk'
 require 'minitest/autorun'
 require 'minitest/spec'
 require 'minitest/mock'
-require 'mocha/mini_test'
+require 'mocha/minitest'
 require "rack/test"
 require "rack/request"
 require "faraday/rack"
 require "faraday/multipart" if ENV['USE_FARADAY_MULTIPART'] == 'true'
+
+module Minitest
+  class Mock
+    def is_a?( _a )
+      false
+    end
+  end
+end
 
 def fixture_path
   File.expand_path("../fixtures", __FILE__)

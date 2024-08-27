@@ -24,7 +24,7 @@
 
 require_relative '../helper'
 
-class LookerDynamicClientTest < MiniTest::Spec
+class LookerDynamicClienttest < Minitest::Spec
 
   def access_token
     '87614b09dd141c22800f96f11737ade5226d7ba8'
@@ -70,7 +70,7 @@ class LookerDynamicClientTest < MiniTest::Spec
 
     begin
       JSON.parse(req_body, :symbolize_names => true).must_equal body
-    rescue JSON::ParserError => e
+    rescue JSON::ParserError
       req_body.must_equal body
     end
 
@@ -86,7 +86,7 @@ class LookerDynamicClientTest < MiniTest::Spec
   end
 
   def verify(response, method, path, body='', query={}, content_type = nil)
-    mock = MiniTest::Mock.new.expect(:call, response){|env| confirm_env(env, method, path, body, query, content_type)}
+    mock = Minitest::Mock.new.expect(:call, response){|env| confirm_env(env, method, path, body, query, content_type)}
     yield sdk_client(default_swagger, mock)
     mock.verify
   end
@@ -94,7 +94,7 @@ class LookerDynamicClientTest < MiniTest::Spec
   describe "swagger" do
 
     it "raises when swagger.json can't be loaded" do
-      mock = MiniTest::Mock.new.expect(:call, nil) {raise "no swagger for you"}
+      mock = Minitest::Mock.new.expect(:call, nil) {raise "no swagger for you"}
       mock.expect(:call, nil) {raise "still no swagger for you"}
       err = assert_raises(RuntimeError) { sdk_client(nil, mock) }
       assert_equal "still no swagger for you", err.message
@@ -102,14 +102,14 @@ class LookerDynamicClientTest < MiniTest::Spec
 
     it "loads swagger without authentication" do
       resp = [200, {'Content-Type' => 'application/json'}, [default_swagger.to_json]]
-      mock = MiniTest::Mock.new.expect(:call, resp, [Hash])
+      mock = Minitest::Mock.new.expect(:call, resp, [Hash])
       sdk = sdk_client(nil, mock)
       assert_equal default_swagger, sdk.swagger
     end
 
     it "loads swagger with authentication" do
       resp = [200, {'Content-Type' => 'application/json'}, [default_swagger.to_json]]
-      mock = MiniTest::Mock.new.expect(:call, nil) {raise "login first!"}
+      mock = Minitest::Mock.new.expect(:call, nil) {raise "login first!"}
       mock.expect(:call, resp, [Hash])
       sdk = sdk_client(nil, mock)
       assert_equal default_swagger, sdk.swagger
