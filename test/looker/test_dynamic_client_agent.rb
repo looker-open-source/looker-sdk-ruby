@@ -64,7 +64,10 @@ describe LookerSDK::Client::Dynamic do
 
   describe "swagger" do
     it "get" do
-      mock = MiniTest::Mock.new.expect(:call, response, [:get, '/api/4.0/user', nil, {}])
+      #mock = Minitest::Mock.new.expect(:call, response, [:get, '/api/4.0/user', nil])
+      mock = Minitest::Mock.new.expect :call, response do | verb, route, body, h=nil, **kw |
+        verb == :get && route == '/api/4.0/user' && body.nil?
+      end
       with_stub(Sawyer::Agent, :new, mock) do
         sdk.me
         mock.verify
@@ -72,7 +75,10 @@ describe LookerSDK::Client::Dynamic do
     end
 
     it "get with params" do
-      mock = MiniTest::Mock.new.expect(:call, response, [:get, '/api/4.0/users/25', nil, {}])
+      #mock = Minitest::Mock.new.expect(:call, response, [:get, '/api/4.0/users/25', nil, {}])
+      mock = Minitest::Mock.new.expect :call, response do | verb, route, body |
+        verb == :get && route == '/api/4.0/users/25' && body.nil?
+      end
       with_stub(Sawyer::Agent, :new, mock) do
         sdk.user(25)
         mock.verify
@@ -80,7 +86,10 @@ describe LookerSDK::Client::Dynamic do
     end
 
     it "get with query" do
-      mock = MiniTest::Mock.new.expect(:call, response, [:get, '/api/4.0/user', nil, {query:{bar:"foo"}}])
+      #mock = Minitest::Mock.new.expect(:call, response, [:get, '/api/4.0/user', nil, {query:{bar:"foo"}}])
+      mock = Minitest::Mock.new.expect :call, response do | verb, route, body, h=nil, **kw |
+        verb == :get && route == '/api/4.0/user' && body.nil? && ( h={query:{bar:"foo"}} || kw = {query:{bar:"foo"}} )
+      end
       with_stub(Sawyer::Agent, :new, mock) do
         sdk.me({bar:'foo'})
         mock.verify
@@ -88,7 +97,10 @@ describe LookerSDK::Client::Dynamic do
     end
 
     it "get with params and query" do
-      mock = MiniTest::Mock.new.expect(:call, response, [:get, '/api/4.0/users/25', nil, {query:{bar:"foo"}}])
+      #mock = Minitest::Mock.new.expect(:call, response, [:get, '/api/4.0/users/25', nil, {query:{bar:"foo"}}])
+      mock = Minitest::Mock.new.expect :call, response do | verb, route, body,h=nil, **kw |
+        verb == :get && route == '/api/4.0/users/25' && body.nil? && ( h={query:{bar:"foo"}} || kw = {query:{bar:"foo"}} )
+      end
       with_stub(Sawyer::Agent, :new, mock) do
         sdk.user(25, {bar:'foo'})
         mock.verify
@@ -96,7 +108,10 @@ describe LookerSDK::Client::Dynamic do
     end
 
     it "post" do
-      mock = MiniTest::Mock.new.expect(:call, response, [:post, '/api/4.0/users', {first_name:'Joe'}, {:headers=>{:content_type=>"application/json"}}])
+      #mock = Minitest::Mock.new.expect(:call, response, [:post, '/api/4.0/users', {first_name:'Joe'}, {:headers=>{:content_type=>"application/json"}}])
+      mock = Minitest::Mock.new.expect :call, response do | verb, route, body, h=nil, **kw |
+        verb == :post && route == '/api/4.0/users' && body == {first_name:'Joe'} && ( h={:headers=>{:content_type=>"application/json"}} || kw = {:headers=>{:content_type=>"application/json"}} )
+      end
       with_stub(Sawyer::Agent, :new, mock) do
         sdk.create_user({first_name:'Joe'})
         mock.verify
@@ -104,7 +119,10 @@ describe LookerSDK::Client::Dynamic do
     end
 
     it "post with default body" do
-      mock = MiniTest::Mock.new.expect(:call, response, [:post, '/api/4.0/users', {}, {:headers=>{:content_type=>"application/json"}}])
+      #mock = Minitest::Mock.new.expect(:call, response, [:post, '/api/4.0/users', {}, {:headers=>{:content_type=>"application/json"}}])
+      mock = Minitest::Mock.new.expect :call, response do | verb, route, body, h=nil, **kw |
+        verb == :post && route == '/api/4.0/users' && body.empty? && ( h={:headers=>{:content_type=>"application/json"}} || kw = {:headers=>{:content_type=>"application/json"}} )
+      end
       with_stub(Sawyer::Agent, :new, mock) do
         sdk.create_user()
         mock.verify
@@ -112,7 +130,10 @@ describe LookerSDK::Client::Dynamic do
     end
 
     it "patch" do
-      mock = MiniTest::Mock.new.expect(:call, response, [:patch, '/api/4.0/users/25', {first_name:'Jim'}, {:headers=>{:content_type=>"application/json"}}])
+      #mock = Minitest::Mock.new.expect(:call, response, [:patch, '/api/4.0/users/25', {first_name:'Jim'}, {:headers=>{:content_type=>"application/json"}}])
+      mock = Minitest::Mock.new.expect :call, response do | verb, route, body, h=nil, **kw |
+        verb == :patch && route == '/api/4.0/users/25' && body == {first_name:'Jim'} && ( h={:headers=>{:content_type=>"application/json"}} || kw = {:headers=>{:content_type=>"application/json"}} )
+      end
       with_stub(Sawyer::Agent, :new, mock) do
         sdk.update_user(25, {first_name:'Jim'})
         mock.verify
@@ -120,7 +141,10 @@ describe LookerSDK::Client::Dynamic do
     end
 
     it "put" do
-      mock = MiniTest::Mock.new.expect(:call, response, [:put, '/api/4.0/users/25/roles', [10, 20], {:headers=>{:content_type=>"application/json"}}])
+      #mock = Minitest::Mock.new.expect(:call, response, [:put, '/api/4.0/users/25/roles', [10, 20], {:headers=>{:content_type=>"application/json"}}])
+      mock = Minitest::Mock.new.expect :call, response do | verb, route, body, h=nil, **kw |
+        verb == :put && route == '/api/4.0/users/25/roles' && body == [10, 20] && ( h={:headers=>{:content_type=>"application/json"}} || kw = {:headers=>{:content_type=>"application/json"}} )
+      end
       with_stub(Sawyer::Agent, :new, mock) do
         sdk.set_user_roles(25, [10,20])
         mock.verify
@@ -128,7 +152,10 @@ describe LookerSDK::Client::Dynamic do
     end
 
     it "put with nil body" do
-      mock = MiniTest::Mock.new.expect(:call, response, [:put, '/api/4.0/users/25/roles', nil, {}])
+      #mock = Minitest::Mock.new.expect(:call, response, [:put, '/api/4.0/users/25/roles', nil])
+      mock = Minitest::Mock.new.expect :call, response do | verb, route, body, h=nil, **kw |
+        verb == :put && route == '/api/4.0/users/25/roles' && body.nil?
+      end
       with_stub(Sawyer::Agent, :new, mock) do
         sdk.set_user_roles(25, nil)
         mock.verify
@@ -136,7 +163,10 @@ describe LookerSDK::Client::Dynamic do
     end
 
     it "put with empty body" do
-      mock = MiniTest::Mock.new.expect(:call, response, [:put, '/api/4.0/users/25/roles', {}, {:headers=>{:content_type=>"application/json"}}])
+      #mock = Minitest::Mock.new.expect(:call, response, [:put, '/api/4.0/users/25/roles', {}, {:headers=>{:content_type=>"application/json"}}])
+      mock = Minitest::Mock.new.expect :call, response do | verb, route, body, h=nil, **kw |
+        verb == :put && route == '/api/4.0/users/25/roles' && body.empty? && ( h={:headers=>{:content_type=>"application/json"}} || kw = {:headers=>{:content_type=>"application/json"}} )
+      end
       with_stub(Sawyer::Agent, :new, mock) do
         sdk.set_user_roles(25, {})
         mock.verify
@@ -144,7 +174,10 @@ describe LookerSDK::Client::Dynamic do
     end
 
     it "delete" do
-      mock = MiniTest::Mock.new.expect(:call, delete_response, [:delete, '/api/4.0/users/25', nil, {}])
+      #mock = Minitest::Mock.new.expect(:call, delete_response, [:delete, '/api/4.0/users/25', nil])
+      mock = Minitest::Mock.new.expect :call, response do | verb, route, body, h=nil, **kw |
+        verb == :delete && route == '/api/4.0/users/25' && body.nil?
+      end
       with_stub(Sawyer::Agent, :new, mock) do
         sdk.delete_user(25)
         mock.verify

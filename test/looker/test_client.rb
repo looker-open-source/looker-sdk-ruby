@@ -304,7 +304,11 @@ describe LookerSDK::Client do
         expected_path = '/api/4.0/users/foo%252Fbar'
 
         resp = OpenStruct.new(:data => "hi", :status => 204)
-        mock = MiniTest::Mock.new.expect(:call, resp, [method, expected_path, nil, {}])
+        #mock = Minitest::Mock.new.expect(:call, resp, [method, expected_path, nil])
+        mock = Minitest::Mock.new.expect :call, resp do | verb, route, body, h=nil, **kw |
+          verb == method && route == expected_path
+        end
+
         Sawyer::Agent.stubs(:new).returns(mock, mock)
 
         sdk = LookerSDK::Client.new
@@ -314,7 +318,7 @@ describe LookerSDK::Client do
           args = [method, path, nil, nil, encoded]
         end
         sdk.without_authentication do
-          value = sdk.public_send *args
+          value = sdk.public_send(*args)
           assert_equal "hi", value
         end
         mock.verify
