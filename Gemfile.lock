@@ -39,7 +39,7 @@ GEM
     rack-test (2.1.0)
       rack (>= 1.3)
     rake (13.2.1)
-    redcarpet (3.5.1)
+    redcarpet (3.6.0)
     rexml (3.3.6)
       strscan
     ruby2_keywords (0.0.5)
@@ -71,7 +71,7 @@ DEPENDENCIES
   rack (~> 2.2.8)
   rack-test (~> 2)
   rake (~> 13.2.1)
-  redcarpet (~> 3.5.1)
+  redcarpet (~> 3.6.0)
   simplecov (~> 0.22.0)
 
 BUNDLED WITH
