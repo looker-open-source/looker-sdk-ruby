@@ -58,7 +58,7 @@ class LookerDynamicClienttest < Minitest::Spec
 
   def confirm_env(env, method, path, body, query, content_type)
     req = Rack::Request.new(env)
-    req_body = req.body.gets || ''
+    req_body = req.body&.gets || ''
 
     req.base_url.must_equal 'https://localhost:19999'
     req.request_method.must_equal method.to_s.upcase
