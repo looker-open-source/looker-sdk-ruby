@@ -76,8 +76,8 @@ module LookerSDK
     #
     # @return [String]
     def inspect
-      inspected = super
-
+      vars = instance_variables.reject {|v| [:@swagger, :@operations].include? v}
+      inspected = "#{self.class.name}: attributes=\n#{vars.map {|v| "\t#{v}=#{instance_variable_get(v)}"}.join("\n")}>"
       # Only show last 4 of token, secret
       [@access_token, @client_secret].compact.each do |str|
         len = [str.size - 4, 0].max
