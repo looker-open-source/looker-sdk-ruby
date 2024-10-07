@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.1.10](https://github.com/looker-open-source/looker-sdk-ruby/compare/v0.1.7...v0.1.10) (2024-10-07)
+
+
+### Bug Fixes
+
+* reduce output of inspect ([#81](https://github.com/looker-open-source/looker-sdk-ruby/issues/81)) ([ffb7d63](https://github.com/looker-open-source/looker-sdk-ruby/commit/ffb7d630842a907e860bc27bfefe8c51f401986a))
+
+
+### Miscellaneous Chores
+
+* release 0.1.10 ([1cf37b4](https://github.com/looker-open-source/looker-sdk-ruby/commit/1cf37b49586d97b4bbd85f1bf4f16c8836948744))
+
 ## [0.1.7](https://github.com/looker-open-source/looker-sdk-ruby/compare/v0.1.6...v0.1.7) (2024-01-19)
 
 
