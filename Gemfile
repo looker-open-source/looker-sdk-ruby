@@ -11,7 +11,7 @@ end
 
 group :test do
   # gem 'json', '~> 1.7', :platforms => [:jruby] look TODO needed?
-  gem 'minitest', '~> 5.25.1'
+  gem 'minitest', '~> 5.25.2'
   gem 'mocha', '~> 2.6.0'
   gem 'rack', '~> 3.1.8'
   gem 'netrc', '~> 0.11.0'
