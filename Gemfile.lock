@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    looker-sdk (0.1.9)
+    looker-sdk (0.1.10)
       faraday (>= 1.2, < 3.0)
       sawyer (~> 0.8)
 

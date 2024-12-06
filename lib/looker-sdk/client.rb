@@ -29,6 +29,7 @@ require 'looker-sdk/configurable'
 require 'looker-sdk/authentication'
 require 'looker-sdk/rate_limit'
 require 'looker-sdk/client/dynamic'
+require 'looker-sdk/error'
 
 module LookerSDK
 
@@ -396,14 +397,16 @@ module LookerSDK
           http.read_timeout = connection.options.timeout rescue 60
 
           http.request(http_request) do |response|
+            if response.code != "200"
+              error = LookerSDK::Error.from_response(response)
+              raise error
+            end
             progress = Progress.new(response)
-            if response.code == "200"
-              response.read_body do |chunk|
-                next unless chunk.length > 0
-                progress.add_chunk(chunk)
-                @block.call(chunk, progress)
-                return OpenStruct.new(status:"0", headers:{}, env:nil, body:nil) if progress.stopped?
-              end
+            response.read_body do |chunk|
+              next unless chunk.length > 0
+              progress.add_chunk(chunk)
+              @block.call(chunk, progress)
+              return OpenStruct.new(status:"0", headers:{}, env:nil, body:nil) if progress.stopped?
             end
           end
         end
