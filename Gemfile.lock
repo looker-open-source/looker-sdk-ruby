@@ -29,7 +29,7 @@ GEM
     faraday-net_http (3.0.2)
     faraday-rack (2.0.0)
       faraday (~> 2.0)
-    minitest (5.25.2)
+    minitest (5.25.4)
     mocha (2.7.1)
       ruby2_keywords (>= 0.0.5)
     multipart-post (2.3.0)
@@ -65,7 +65,7 @@ DEPENDENCIES
   faraday-multipart (~> 1.0)
   faraday-rack (~> 2)
   looker-sdk!
-  minitest (~> 5.25.2)
+  minitest (~> 5.25.4)
   mocha (~> 2.7.1)
   netrc (~> 0.11.0)
   rack (~> 3.1.8)
