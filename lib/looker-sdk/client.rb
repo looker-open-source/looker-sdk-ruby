@@ -397,16 +397,21 @@ module LookerSDK
           http.read_timeout = connection.options.timeout rescue 60
 
           http.request(http_request) do |response|
-            if response.code != "200"
+            case response.code.to_i
+            when 400..599 then 
               error = LookerSDK::Error.from_response(response)
               raise error
-            end
-            progress = Progress.new(response)
-            response.read_body do |chunk|
-              next unless chunk.length > 0
-              progress.add_chunk(chunk)
-              @block.call(chunk, progress)
-              return OpenStruct.new(status:"0", headers:{}, env:nil, body:nil) if progress.stopped?
+            when 300..399 then
+              error = LookerSDK::Error.new("3xx response from streaming request")
+              raise error
+            when 200..299 then
+              progress = Progress.new(response)
+              response.read_body do |chunk|
+                next unless chunk.length > 0
+                progress.add_chunk(chunk)
+                @block.call(chunk, progress)
+                return OpenStruct.new(status:"0", headers:{}, env:nil, body:nil) if progress.stopped?
+              end
             end
           end
         end
