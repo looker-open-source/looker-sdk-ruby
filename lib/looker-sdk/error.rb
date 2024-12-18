@@ -76,6 +76,12 @@ module LookerSDK
       response_message
     end
 
+    # Looker SDK error objects (e.g. LookerSDK::BadRequest) raise a
+    # WebMock::NetConnectNotAllowedError if they are marshal dumped.
+    def marshal_dump
+      raise TypeError.new("Refusing to marshal")
+    end
+
     # Error Doc URL
     #
     # @return [String]
