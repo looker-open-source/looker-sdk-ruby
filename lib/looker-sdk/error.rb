@@ -1,7 +1,7 @@
 ############################################################################################
 # The MIT License (MIT)
 #
-# Copyright (c) 2022 Looker Data Sciences, Inc.
+# Copyright (c) 2024 Google, LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -74,6 +74,12 @@ module LookerSDK
     # @return [String]
     def message
       response_message
+    end
+
+    # Looker SDK error objects (e.g. LookerSDK::BadRequest) raise a
+    # WebMock::NetConnectNotAllowedError if they are marshal dumped.
+    def marshal_dump
+      raise TypeError.new("Refusing to marshal")
     end
 
     # Error Doc URL
