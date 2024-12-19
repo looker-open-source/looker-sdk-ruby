@@ -1,7 +1,7 @@
 ############################################################################################
 # The MIT License (MIT)
 #
-# Copyright (c) 2022 Looker Data Sciences, Inc.
+# Copyright (c) 2024 Google, LLC
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,6 +29,7 @@ require 'looker-sdk/configurable'
 require 'looker-sdk/authentication'
 require 'looker-sdk/rate_limit'
 require 'looker-sdk/client/dynamic'
+require 'looker-sdk/error'
 
 module LookerSDK
 
@@ -396,8 +397,15 @@ module LookerSDK
           http.read_timeout = connection.options.timeout rescue 60
 
           http.request(http_request) do |response|
-            progress = Progress.new(response)
-            if response.code == "200"
+            case response.code.to_i
+            when 400..599 then 
+              error = LookerSDK::Error.from_response(response)
+              raise error
+            when 300..399 then
+              error = LookerSDK::Error.new("3xx response from streaming request")
+              raise error
+            when 200..299 then
+              progress = Progress.new(response)
               response.read_body do |chunk|
                 next unless chunk.length > 0
                 progress.add_chunk(chunk)
