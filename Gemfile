@@ -7,6 +7,7 @@ end
 
 group :development, :test do
   gem 'rake', '~> 13.2.1'
+  gem 'ruby2_keywords'
 end
 
 group :test do
