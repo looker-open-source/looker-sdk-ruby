@@ -22,6 +22,8 @@
 # THE SOFTWARE.
 ############################################################################################
 
+require 'ruby2_keywords'
+
 module LookerSDK
   class Client
 
@@ -97,12 +99,12 @@ module LookerSDK
       # Callers can explicitly 'invoke' remote methods or let 'method_missing' do the trick.
       # If nothing else, this gives clients a way to deal with potential conflicts between remote method
       # names and names of methods on client itself.
-      def invoke(method_name, *args, &block)
+      ruby2_keywords def invoke(method_name, *args, &block)
         entry = find_entry(method_name) || raise(NameError, "undefined remote method '#{method_name}'")
         invoke_remote(entry, method_name, *args, &block)
       end
 
-      def method_missing(method_name, *args, &block)
+      ruby2_keywords def method_missing(method_name, *args, &block)
         entry = find_entry(method_name) || (return super)
         invoke_remote(entry, method_name, *args, &block)
       end
@@ -117,7 +119,7 @@ module LookerSDK
         operations && operations[method_name.to_sym] if dynamic
       end
 
-      def invoke_remote(entry, method_name, *args, &block)
+      ruby2_keywords def invoke_remote(entry, method_name, *args, &block)
         args = (args || []).dup
         route = entry[:route].to_s.dup
         params = (entry[:info][:parameters] || []).select {|param| param[:in] == 'path'}

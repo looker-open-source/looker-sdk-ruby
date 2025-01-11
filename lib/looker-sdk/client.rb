@@ -30,6 +30,7 @@ require 'looker-sdk/authentication'
 require 'looker-sdk/rate_limit'
 require 'looker-sdk/client/dynamic'
 require 'looker-sdk/error'
+require 'ruby2_keywords'
 
 module LookerSDK
 
@@ -293,7 +294,7 @@ module LookerSDK
     # LOOKER_SILENT is set to true.
     #
     # @return [nil]
-    def looker_warn(*message)
+    ruby2_keywords def looker_warn(*message)
       unless ENV['LOOKER_SILENT']
         warn message
       end
