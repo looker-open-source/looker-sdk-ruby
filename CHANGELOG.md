@@ -1,5 +1,15 @@
 # Changelog
 
+## [0.1.11](https://github.com/looker-open-source/looker-sdk-ruby/compare/v0.1.10...v0.1.11) (2025-01-13)
+
+
+### Bug Fixes
+
+* add error handling for streaming client ([69b8064](https://github.com/looker-open-source/looker-sdk-ruby/commit/69b8064818161d273872eb658be16bb17ed6df56))
+* handle all variety of http response codes. ([6d75ee2](https://github.com/looker-open-source/looker-sdk-ruby/commit/6d75ee2c30521d48b4e68b910c75ff5fe9ff22e7))
+* raise TypeError on marshal_dump ([#100](https://github.com/looker-open-source/looker-sdk-ruby/issues/100)) ([9e486ff](https://github.com/looker-open-source/looker-sdk-ruby/commit/9e486ff413f1951e557a9816729007067bf8588f))
+* update rexml to 3.3.9 to eliminate ReDos vulnerability ([#102](https://github.com/looker-open-source/looker-sdk-ruby/issues/102)) ([42c5cd3](https://github.com/looker-open-source/looker-sdk-ruby/commit/42c5cd349231457fd7e75e541a0a208bae625c39))
+
 ## [0.1.10](https://github.com/looker-open-source/looker-sdk-ruby/compare/v0.1.7...v0.1.10) (2024-10-07)
 
 
