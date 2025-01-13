@@ -50,6 +50,7 @@ end
 
 #require 'rack'
 #require 'rack/mock_response'
+require 'ruby2_keywords'
 
 require 'looker-sdk/client'
 require 'looker-sdk/default'
@@ -74,7 +75,7 @@ module LookerSDK
 
   private
 
-    def method_missing(method_name, *args, &block)
+    ruby2_keywords def method_missing(method_name, *args, &block)
       return super unless client.respond_to?(method_name)
       client.send(method_name, *args, &block)
     end
