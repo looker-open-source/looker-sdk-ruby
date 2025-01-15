@@ -17,6 +17,9 @@ jobs:
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Print event info for debug
+        run: cat $GITHUB_EVENT_PATH
+
       - name: Check for release key
         run: echo "HAS_RELEASE_KEY=$(jq 'has("release")' $GITHUB_EVENT_PATH)" >> $GITHUB_ENV
 
