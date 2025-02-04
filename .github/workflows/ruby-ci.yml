@@ -17,6 +17,7 @@ jobs:
 
   test:
     name: Ruby-CI ${{ matrix.ruby-version }}/${{ matrix.looker }}/multipart ${{ matrix.use_faraday_multipart }}
+
     env:
       LOOKERSDK_CLIENT_ID: ${{ secrets.LOOKERSDK_CLIENT_ID }}
       LOOKERSDK_CLIENT_SECRET: ${{ secrets.LOOKERSDK_CLIENT_SECRET }}
@@ -119,6 +120,10 @@ jobs:
     if: success() || failure()
     runs-on: ubuntu-latest
 
+    permissions:
+      pull-requests: write
+      checks: write
+    
     steps:
       - name: Download Artifacts
         uses: actions/download-artifact@v4
