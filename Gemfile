@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 group :development do
   gem 'awesome_print', '~>1.9.2', :require => 'ap'
-  gem 'redcarpet', '~>3.6.0', :platforms => :ruby
+  gem 'redcarpet', '~>3.6.1', :platforms => :ruby
 end
 
 group :development, :test do
