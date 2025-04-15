@@ -27,7 +27,7 @@ GEM
     faraday-multipart (1.1.0)
       multipart-post (~> 2.0)
     faraday-net_http (3.0.2)
-    faraday-rack (2.0.0)
+    faraday-rack (2.1.2)
       faraday (~> 2.0)
     minitest (5.25.5)
     mocha (2.7.1)
