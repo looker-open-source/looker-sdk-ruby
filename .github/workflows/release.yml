@@ -17,7 +17,7 @@ jobs:
           release-type: ruby
           token: ${{ secrets.LOS_AUTO_BOT_RP_TOKEN }}
       # Checkout code if release was created
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
         if: ${{ steps.release.outputs.release_created }}
       # Setup ruby if a release was created
       - uses: ruby/setup-ruby@v1
