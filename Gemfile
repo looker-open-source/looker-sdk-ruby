@@ -6,7 +6,7 @@ group :development do
 end
 
 group :development, :test do
-  gem 'rake', '~> 13.3.0'
+  gem 'rake', '~> 13.3.1'
   gem 'ruby2_keywords'
 end
 
