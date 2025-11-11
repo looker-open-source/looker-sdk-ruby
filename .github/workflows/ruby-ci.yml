@@ -113,7 +113,7 @@ jobs:
 
       - name: Upload ts unit test results
         if: ${{ always() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: ruby-ci-test-results-ruby_${{ matrix.ruby-version }}_Looker_${{ matrix.looker }}_multipart_${{ matrix.use_faraday_multipart }}
           path: results/
