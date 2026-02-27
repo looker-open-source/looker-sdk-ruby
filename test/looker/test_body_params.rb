@@ -27,9 +27,10 @@ class LookerBodyParamsTest < Minitest::Spec
         "swagger": "2.0",
         "basePath": "/api/4.0",
         "paths": {
-          "/test_post_query": {
+          "/test_post_urlencoded": {
             "post": {
-              "operationId": "test_post_query",
+              "operationId": "test_post_urlencoded",
+              "consumes": ["application/x-www-form-urlencoded"],
               "parameters": [
                 {
                   "name": "param1",
@@ -43,35 +44,14 @@ class LookerBodyParamsTest < Minitest::Spec
                 }
               ],
               "responses": {
-                "200": {
-                  "description": "Success"
-                }
+                "200": { "description": "Success" }
               }
             }
           },
-          "/test_post_body": {
+          "/test_post_json": {
             "post": {
-              "operationId": "test_post_body",
-              "parameters": [
-                {
-                  "name": "body",
-                  "in": "body",
-                  "required": true,
-                  "schema": {
-                    "type": "object"
-                  }
-                }
-              ],
-              "responses": {
-                "200": {
-                  "description": "Success"
-                }
-              }
-            }
-          },
-          "/test_get_query": {
-            "get": {
-              "operationId": "test_get_query",
+              "operationId": "test_post_json",
+              "consumes": ["application/json"],
               "parameters": [
                 {
                   "name": "param1",
@@ -80,9 +60,22 @@ class LookerBodyParamsTest < Minitest::Spec
                 }
               ],
               "responses": {
-                "200": {
-                  "description": "Success"
+                "200": { "description": "Success" }
+              }
+            }
+          },
+          "/test_post_default": {
+            "post": {
+              "operationId": "test_post_default",
+              "parameters": [
+                {
+                  "name": "param1",
+                  "in": "query",
+                  "type": "string"
                 }
+              ],
+              "responses": {
+                "200": { "description": "Success" }
               }
             }
           }
@@ -133,24 +126,24 @@ class LookerBodyParamsTest < Minitest::Spec
   end
 
   describe "Body Params Refactor" do
-    it "moves query params to body for POST when no body param is defined" do
-      # We expect the query to be EMPTY and the body to contain param1 and param2
-      verify(response, :post, '/api/4.0/test_post_query', {param1: 'foo', param2: 'bar'}, {}) do |sdk|
-        # Calling with nil body and params in options (legacy pattern for no-body methods)
-        sdk.test_post_query(nil, param1: 'foo', param2: 'bar')
+    it "moves query params to body for POST when consumes is x-www-form-urlencoded" do
+      # Expect body to have params, query to be empty
+      verify(response, :post, '/api/4.0/test_post_urlencoded', {param1: 'foo', param2: 'bar'}, {}) do |sdk|
+        sdk.test_post_urlencoded(nil, param1: 'foo', param2: 'bar')
       end
     end
 
-    it "keeps params in body for POST when body param IS defined" do
-      # Normal behavior: payload goes to body, options/query stay blank or separate
-      verify(response, :post, '/api/4.0/test_post_body', {foo: 'bar'}, {}) do |sdk|
-        sdk.test_post_body({foo: 'bar'})
+    it "keeps params in query for POST when consumes is application/json" do
+      # Expect body to be empty (or nil), query to have params
+      verify(response, :post, '/api/4.0/test_post_json', '', {param1: 'foo'}) do |sdk|
+        sdk.test_post_json(nil, param1: 'foo')
       end
     end
-    
-    it "keeps params in query for GET" do
-      verify(response, :get, '/api/4.0/test_get_query', '', {param1: 'foo'}) do |sdk|
-        sdk.test_get_query(param1: 'foo')
+
+    it "keeps params in query for POST when consumes is unspecified" do
+      # Expect body to be empty, query to have params
+      verify(response, :post, '/api/4.0/test_post_default', '', {param1: 'foo'}) do |sdk|
+        sdk.test_post_default(nil, param1: 'foo')
       end
     end
   end

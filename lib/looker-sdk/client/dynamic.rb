@@ -145,9 +145,9 @@ module LookerSDK
 
         method = entry[:method].to_sym
 
-        if [:post, :put, :patch].include?(method) && !body_param
-          if (a.nil? || a.respond_to?(:empty?) && a.empty?) && (b && !b.empty?)
-            a = {} if a.nil?
+        if [:post, :put, :patch].include?(method) && (entry[:info][:consumes] || []).include?("application/x-www-form-urlencoded")
+          if empty_body?(a) && !empty_body?(b)
+            a = {} if empty_body?(a)
             if b.key?(:query)
               a.merge!(b.delete(:query))
             end
@@ -170,6 +170,9 @@ module LookerSDK
         end
       end
 
+      def empty_body?(body)
+        body.nil? || (body.respond_to?(:empty?) && body.empty?)
+      end
     end
   end
 end
