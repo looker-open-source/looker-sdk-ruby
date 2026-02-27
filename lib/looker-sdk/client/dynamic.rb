@@ -144,6 +144,22 @@ module LookerSDK
         b = args.length > 1 ? args[1] : {}
 
         method = entry[:method].to_sym
+
+        if [:post, :put, :patch].include?(method) && !body_param
+          if (a.nil? || a.respond_to?(:empty?) && a.empty?) && (b && !b.empty?)
+            a = {} if a.nil?
+            if b.key?(:query)
+              a.merge!(b.delete(:query))
+            end
+
+            b.keys.each do |k|
+              next if k == :headers
+              next if Client::CONVENIENCE_HEADERS.include?(k)
+              a[k] = b.delete(k)
+            end
+          end
+        end
+
         case method
         when :get     then get(route, a, true, &block)
         when :post    then post(route, a, merge_content_type_if_body(a, b), true, &block)
