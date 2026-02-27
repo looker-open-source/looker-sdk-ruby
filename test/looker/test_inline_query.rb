@@ -57,6 +57,7 @@ describe LookerSDK::Client do
     opts.merge!({
       :netrc => true,
       :netrc_file => File.join(fixture_path, '.netrc'),
+      :api_endpoint => "#{base_url}/api/#{api_version}",
       :connection_options => {:ssl => {:verify => false}},
     })
 
