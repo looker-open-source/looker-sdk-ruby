@@ -94,6 +94,7 @@ def setup_sdk
     else
       c.netrc = true
       c.netrc_file =  File.join(fixture_path, '.netrc')
+      c.api_endpoint = "#{base_url}/api/#{api_version}"
     end
   end
 end

@@ -57,6 +57,7 @@ describe LookerSDK::Client do
     opts.merge!({
       :netrc => true,
       :netrc_file => File.join(fixture_path, '.netrc'),
+      :api_endpoint => "#{base_url}/api/#{api_version}",
       :connection_options => {:ssl => {:verify => false}},
     })
 
@@ -156,12 +157,14 @@ describe LookerSDK::Client do
 
       describe "with .netrc"  do
         it "can read .netrc files" do
-          skip unless File.exist?(File.join(fixture_path, '.netrc'))
+          netrc_file = File.expand_path('../../../examples/.netrc', __FILE__)
+          skip unless File.exist?(netrc_file)
           LookerSDK.reset!
+          File.chmod(0600, netrc_file)
           client = LookerSDK::Client.new(
             :lazy_swagger => true,
             :netrc => true,
-            :netrc_file => File.join(fixture_path, '.netrc'),
+            :netrc_file => netrc_file,
           )
           client.client_id.wont_be_nil
           client.client_secret.wont_be_nil
