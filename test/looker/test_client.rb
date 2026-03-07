@@ -376,6 +376,37 @@ describe LookerSDK::Client do
     end
   end
 
+  describe "authentication" do
+    it "sets the proper content type header on login" do
+      LookerSDK.reset!
+      client = LookerSDK::Client.new(
+        client_id: 'a',
+        client_secret: 'b',
+        api_endpoint: 'https://localhost:19999/api/4.0',
+        connection_options: {ssl: {verify: false}},
+        lazy_swagger: true
+      )
+
+      # login returns token info
+      token_response = OpenStruct.new(status: 200, data: {access_token: 'token', token_type: 'Bearer', expires_in: 3600})
+
+      # expect the post to have the right url, body, and headers
+      mock = Minitest::Mock.new.expect(:call, token_response) do |method, path, body, options|
+        method == :post &&
+        path == '/api/4.0/login' &&
+        body == 'client_id=a&client_secret=b' &&
+        options == {headers: {:'Content-Type' => 'application/x-www-form-urlencoded'}}
+      end
+
+      # test_client.rb uses mocha for mocking/stubbing usually:
+      Sawyer::Agent.stubs(:new).returns(mock)
+
+      client.authenticate
+
+      mock.verify
+    end
+  end
+
   # TODO: Convert the old tests that were here to deal with swagger/dynamic way of doing things. Perhaps
   # with a dedicated server that serves swagger customized to the test suite. Also, bring the auth tests
   # to life here on the SDK client end.
