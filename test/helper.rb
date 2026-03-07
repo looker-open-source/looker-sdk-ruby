@@ -22,9 +22,13 @@
 # THE SOFTWARE.
 ############################################################################################
 
-require 'simplecov'
-SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new SimpleCov::Formatter::HTMLFormatter
-SimpleCov.start
+begin
+  require 'simplecov'
+  SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter.new SimpleCov::Formatter::HTMLFormatter
+  SimpleCov.start
+rescue LoadError
+  # ignore simplecov if not installed
+end
 
 require 'rubygems'
 require 'bundler/setup'
