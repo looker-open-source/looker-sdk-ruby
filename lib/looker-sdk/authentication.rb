@@ -52,8 +52,7 @@ module LookerSDK
       set_access_token_from_params(nil)
       without_authentication do
         encoded_auth = Faraday::Utils.build_query(application_credentials)
-        post("#{URI.parse(api_endpoint).path}/login", encoded_auth, headers: {:'Content-Type' => 'application/x-www-form-urlencoded'})
-        raise "login failure #{last_response.status}" unless last_response.status == 200
+        post(File.join(URI.parse(api_endpoint).path, 'login'), encoded_auth, headers: {:'Content-Type' => 'application/x-www-form-urlencoded'})
         set_access_token_from_params(last_response.data)
       end
     end

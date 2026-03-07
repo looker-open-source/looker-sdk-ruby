@@ -387,16 +387,13 @@ describe LookerSDK::Client do
         lazy_swagger: true
       )
 
-      # We want to mock the post request and assert the header
-      mock = Minitest::Mock.new
-
       # login returns token info
       token_response = OpenStruct.new(status: 200, data: {access_token: 'token', token_type: 'Bearer', expires_in: 3600})
 
       # expect the post to have the right url, body, and headers
       mock = Minitest::Mock.new.expect(:call, token_response) do |method, path, body, options|
         method == :post &&
-        path == '/api/4.0//login' &&
+        path == '/api/4.0/login' &&
         body == 'client_id=a&client_secret=b' &&
         options == {headers: {:'Content-Type' => 'application/x-www-form-urlencoded'}}
       end
