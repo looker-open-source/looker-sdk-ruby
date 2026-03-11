@@ -1,5 +1,19 @@
 # Changelog
 
+## [0.2.0](https://github.com/looker-open-source/looker-sdk-ruby/compare/v0.1.11...v0.2.0) (2026-03-08)
+
+
+### Features
+
+* Allow query parameters to be passed in the body for POST, PUT, and PATCH requests when no body parameter is explicitly defined. ([#156](https://github.com/looker-open-source/looker-sdk-ruby/issues/156)) ([6bb702b](https://github.com/looker-open-source/looker-sdk-ruby/commit/6bb702bd8c40bc2efdfad25df60a1a661e00e16b))
+
+
+### Bug Fixes
+
+* allow tests to run against remote server ([#155](https://github.com/looker-open-source/looker-sdk-ruby/issues/155)) ([1156d52](https://github.com/looker-open-source/looker-sdk-ruby/commit/1156d52c849197176ee62e8a122d2e5bab71f4be))
+* move query params -&gt; body only on form ([#158](https://github.com/looker-open-source/looker-sdk-ruby/issues/158)) ([87e7280](https://github.com/looker-open-source/looker-sdk-ruby/commit/87e72805d479906ebd7d4753898d7609c9a33016))
+* send proper content-type header at /login ([#160](https://github.com/looker-open-source/looker-sdk-ruby/issues/160)) ([36866eb](https://github.com/looker-open-source/looker-sdk-ruby/commit/36866eb7d3414c2b00a65f3ee8b3b3784416bdf8))
+
 ## [0.1.11](https://github.com/looker-open-source/looker-sdk-ruby/compare/v0.1.10...v0.1.11) (2025-01-13)
 
 
