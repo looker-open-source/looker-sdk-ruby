@@ -19,8 +19,9 @@ jobs:
       - uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4
         id: release
         with:
-          release-type: ruby
           token: ${{ secrets.LOS_AUTO_BOT_RP_TOKEN }}
+          config-file: release-please-config.json
+          manifest-file: .release-please-manifest.json
       # Checkout code if release was created
       - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         if: ${{ steps.release.outputs.release_created }}
