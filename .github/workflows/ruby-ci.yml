@@ -12,14 +12,17 @@ env:
   LOOKERSDK_API_VERSION: "4.0"
 
 permissions:
-  checks: write
+  contents: read
 
 jobs:
   setup:
-    uses: looker-open-source/reusable-actions/.github/workflows/supported-versions.yml@main
+    uses: looker-open-source/reusable-actions/.github/workflows/supported-versions.yml@e1b039524f337b1a11f37298930df4efab4d8f23 # main
 
   test:
     name: Ruby-CI ${{ matrix.ruby-version }}/${{ matrix.looker }}/multipart ${{ matrix.use_faraday_multipart }}
+
+    permissions:
+      contents: read
 
     env:
       LOOKERSDK_CLIENT_ID: ${{ secrets.LOOKERSDK_CLIENT_ID }}
@@ -30,20 +33,22 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        ruby-version: [2.7.8, 3.0.6, 3.1.4]
+        ruby-version: [3.1.7]
         looker: ${{ fromJson(needs.setup.outputs.matrix_json) }}
         use_faraday_multipart: ['true', 'false']
 
     steps:
       - name: Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.12.1
+        uses: styfle/cancel-workflow-action@85880fa0301c86cca9da44039ee3bb12d3bedbfa # 0.12.1
         with:
           access_token: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
+        with:
+          persist-credentials: false
 
       - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v3
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3
         with:
           credentials_json: ${{ secrets.GCP_AR_READER_SA_KEY }}
           project_id: ${{ secrets.GCP_PROJECT_ID }}
@@ -51,7 +56,7 @@ jobs:
           export_environment_variables: true
 
       - name: Set up Cloud SDK
-        uses: google-github-actions/setup-gcloud@v3
+        uses: google-github-actions/setup-gcloud@aa5489c8933f4cc7a4f7d45035b3b1440c9c10db # v3
 
       - name: Authenticate Artifact Repository
         run: gcloud auth configure-docker us-west1-docker.pkg.dev --quiet
@@ -60,13 +65,15 @@ jobs:
         # TODO: can we cache some layers of the image for faster download?
         # we probably don't want to cache the final image for IP security...
         run: |
-          docker pull --quiet us-west1-docker.pkg.dev/cloud-looker-sdk-codegen-cicd/looker/${{ matrix.looker }}
+          docker pull --quiet us-west1-docker.pkg.dev/cloud-looker-sdk-codegen-cicd/looker/${MATRIX_LOOKER}
           # set $LOOKER_OPTS to --no-ssl if we want to turn off ssl
-          docker run --name looker-sdk-codegen-ci -d -p 10000:9999 -p 20000:19999 us-west1-docker.pkg.dev/cloud-looker-sdk-codegen-cicd/looker/${{ matrix.looker }}
+          docker run --name looker-sdk-codegen-ci -d -p 10000:9999 -p 20000:19999 us-west1-docker.pkg.dev/cloud-looker-sdk-codegen-cicd/looker/${MATRIX_LOOKER}
           docker logs -f looker-sdk-codegen-ci --until=30s &
+        env:
+          MATRIX_LOOKER: ${{ matrix.looker }}
 
       - name: Set up Ruby ${{ matrix.ruby-version }}
-        uses: ruby/setup-ruby@v1
+        uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1
         with:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: false
@@ -113,7 +120,7 @@ jobs:
 
       - name: Upload ts unit test results
         if: ${{ always() }}
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
         with:
           name: ruby-ci-test-results-ruby_${{ matrix.ruby-version }}_Looker_${{ matrix.looker }}_multipart_${{ matrix.use_faraday_multipart }}
           path: results/
@@ -129,12 +136,12 @@ jobs:
     
     steps:
       - name: Download Artifacts
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@634f93cb2916e3fdff6788551b99b062d0335ce0 # v5
         with:
           path: artifacts
 
       - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@v2
+        uses: EnricoMi/publish-unit-test-result-action@7622c5bf3d112a72ab4fa3951c2aa5723d8ab92d # v2
         with:
           # Cosmetic issue with `check_name` being associated to the wrong
           # workflow: https://github.com/EnricoMi/publish-unit-test-result-action/issues/12

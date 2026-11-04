@@ -407,6 +407,101 @@ describe LookerSDK::Client do
     end
   end
 
+  describe "streaming client SSL verification" do
+    it "verifies SSL peer by default when ssl.verify is not explicitly configured" do
+      client = LookerSDK::Client.new(lazy_swagger: true)
+      streaming_client = LookerSDK::Client::StreamingClient.new(client)
+
+      mock_ssl = OpenStruct.new(verify: nil)
+      mock_conn = OpenStruct.new(
+        ssl: mock_ssl,
+        options: OpenStruct.new(open_timeout: 30, timeout: 60)
+      )
+      def mock_conn.build_exclusive_url(*); "https://localhost:19999/api/4.0/test"; end
+
+      mock_req = OpenStruct.new(
+        path: "/api/4.0/test",
+        params: {},
+        options: OpenStruct.new(params_encoder: nil),
+        http_method: :get,
+        headers: {},
+        body: nil
+      )
+
+      Net::HTTP.expects(:start).with do |host, port, opts|
+        assert_equal "localhost", host
+        assert_equal 19999, port
+        assert_equal true, opts[:use_ssl]
+        assert_equal OpenSSL::SSL::VERIFY_PEER, opts[:verify_mode]
+        true
+      end
+
+      streaming_client.build_response(mock_conn, mock_req)
+    end
+
+    it "disables SSL verification when ssl.verify is explicitly false" do
+      client = LookerSDK::Client.new(lazy_swagger: true)
+      streaming_client = LookerSDK::Client::StreamingClient.new(client)
+
+      mock_ssl = OpenStruct.new(verify: false)
+      mock_conn = OpenStruct.new(
+        ssl: mock_ssl,
+        options: OpenStruct.new(open_timeout: 30, timeout: 60)
+      )
+      def mock_conn.build_exclusive_url(*); "https://localhost:19999/api/4.0/test"; end
+
+      mock_req = OpenStruct.new(
+        path: "/api/4.0/test",
+        params: {},
+        options: OpenStruct.new(params_encoder: nil),
+        http_method: :get,
+        headers: {},
+        body: nil
+      )
+
+      Net::HTTP.expects(:start).with do |host, port, opts|
+        assert_equal "localhost", host
+        assert_equal 19999, port
+        assert_equal true, opts[:use_ssl]
+        assert_equal OpenSSL::SSL::VERIFY_NONE, opts[:verify_mode]
+        true
+      end
+
+      streaming_client.build_response(mock_conn, mock_req)
+    end
+
+    it "verifies SSL peer when ssl.verify is explicitly true" do
+      client = LookerSDK::Client.new(lazy_swagger: true)
+      streaming_client = LookerSDK::Client::StreamingClient.new(client)
+
+      mock_ssl = OpenStruct.new(verify: true)
+      mock_conn = OpenStruct.new(
+        ssl: mock_ssl,
+        options: OpenStruct.new(open_timeout: 30, timeout: 60)
+      )
+      def mock_conn.build_exclusive_url(*); "https://localhost:19999/api/4.0/test"; end
+
+      mock_req = OpenStruct.new(
+        path: "/api/4.0/test",
+        params: {},
+        options: OpenStruct.new(params_encoder: nil),
+        http_method: :get,
+        headers: {},
+        body: nil
+      )
+
+      Net::HTTP.expects(:start).with do |host, port, opts|
+        assert_equal "localhost", host
+        assert_equal 19999, port
+        assert_equal true, opts[:use_ssl]
+        assert_equal OpenSSL::SSL::VERIFY_PEER, opts[:verify_mode]
+        true
+      end
+
+      streaming_client.build_response(mock_conn, mock_req)
+    end
+  end
+
   # TODO: Convert the old tests that were here to deal with swagger/dynamic way of doing things. Perhaps
   # with a dedicated server that serves swagger customized to the test suite. Also, bring the auth tests
   # to life here on the SDK client end.
