@@ -7,28 +7,36 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+
 jobs:
   release-please:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
-      - uses: googleapis/release-please-action@v4
+      - uses: googleapis/release-please-action@5c625bfb5d1ff62eadeeb3772007f7f66fdcf071 # v4
         id: release
         with:
           release-type: ruby
           token: ${{ secrets.LOS_AUTO_BOT_RP_TOKEN }}
       # Checkout code if release was created
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@fbc6f3992d24b796d5a048ff273f7fcc4a7b6c09 # v5
         if: ${{ steps.release.outputs.release_created }}
-      # Setup ruby if a release was created
-      - uses: ruby/setup-ruby@v1
         with:
-          ruby-version: 2.7.7
+          persist-credentials: false
+      # Setup ruby if a release was created
+      - uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1
+        with:
+          ruby-version: 3.1.7
         if: ${{ steps.release.outputs.release_created }}
       # Bundle install
       - run: bundle install
         if: ${{ steps.release.outputs.release_created }}
       # Publish
       - name: publish gem
+        # zizmor: ignore[use-trusted-publishing]
         run: |
           mkdir -p $HOME/.gem
           touch $HOME/.gem/credentials
