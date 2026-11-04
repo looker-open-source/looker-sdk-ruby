@@ -385,7 +385,7 @@ module LookerSDK
 
         connect_opts = {
           :use_ssl => !!connection.ssl,
-          :verify_mode => (connection.ssl.verify rescue true) ?
+          :verify_mode => ((connection.ssl.verify != false) rescue true) ?
             OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE,
         }
 
