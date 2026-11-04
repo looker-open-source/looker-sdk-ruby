@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.2.1](https://github.com/looker-open-source/looker-sdk-ruby/compare/v0.2.0...v0.2.1) (2026-11-04)
+
+
+### Bug Fixes
+
+* configure release-please manifest and version-file for ruby code ([#171](https://github.com/looker-open-source/looker-sdk-ruby/issues/171)) ([7f9aa51](https://github.com/looker-open-source/looker-sdk-ruby/commit/7f9aa5187b4a59b6fae36d5b1bdc50859b352077))
+* enable SSL certificate verification by default in streaming requests ([#169](https://github.com/looker-open-source/looker-sdk-ruby/issues/169)) ([824f90e](https://github.com/looker-open-source/looker-sdk-ruby/commit/824f90e406a6a21bf1bdc8f6aa9d49ffe05f8a1b))
+
 ## [0.2.0](https://github.com/looker-open-source/looker-sdk-ruby/compare/v0.1.11...v0.2.0) (2026-03-08)
 
 
