@@ -28,7 +28,7 @@ jobs:
         with:
           persist-credentials: false
       # Setup ruby if a release was created
-      - uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1
+      - uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1.336.0
         with:
           ruby-version: 3.1.7
         if: ${{ steps.release.outputs.release_created }}
