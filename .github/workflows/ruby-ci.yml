@@ -15,9 +15,6 @@ permissions:
   contents: read
 
 jobs:
-  setup:
-    uses: looker-open-source/reusable-actions/.github/workflows/supported-versions.yml@e1b039524f337b1a11f37298930df4efab4d8f23 # main
-
   test:
     name: Ruby-CI ${{ matrix.ruby-version }}/${{ matrix.looker }}/multipart ${{ matrix.use_faraday_multipart }}
 
@@ -29,12 +26,11 @@ jobs:
       LOOKERSDK_CLIENT_SECRET: ${{ secrets.LOOKERSDK_CLIENT_SECRET }}
       CI_REPORTS: results/Ruby-CI-ruby_${{ matrix.ruby-version }}_Looker_${{ matrix.looker }}_multipart_${{ matrix.use_faraday_multipart }}
 
-    needs: setup
     runs-on: ubuntu-latest
     strategy:
       matrix:
         ruby-version: [3.1.7]
-        looker: ${{ fromJson(needs.setup.outputs.matrix_json) }}
+        looker: ${{ fromJson(vars.SUPPORTED_LOOKER_VERSIONS) }}
         use_faraday_multipart: ['true', 'false']
 
     steps:
@@ -73,7 +69,7 @@ jobs:
           MATRIX_LOOKER: ${{ matrix.looker }}
 
       - name: Set up Ruby ${{ matrix.ruby-version }}
-        uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1
+        uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1.336.0
         with:
           ruby-version: ${{ matrix.ruby-version }}
           bundler-cache: false
@@ -141,7 +137,7 @@ jobs:
           path: artifacts
 
       - name: Publish Test Results
-        uses: EnricoMi/publish-unit-test-result-action@7622c5bf3d112a72ab4fa3951c2aa5723d8ab92d # v2
+        uses: EnricoMi/publish-unit-test-result-action@7622c5bf3d112a72ab4fa3951c2aa5723d8ab92d # v2.25.0
         with:
           # Cosmetic issue with `check_name` being associated to the wrong
           # workflow: https://github.com/EnricoMi/publish-unit-test-result-action/issues/12
